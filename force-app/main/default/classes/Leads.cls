@@ -1,34 +1,28 @@
 public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
-  public Leads(List<Lead> sObjectList) {
-    super(sObjectList);
-  }
-
-  public override void onValidate() {
-    for (Lead leadRecord : (List<Lead>) Records) {
-      ownerCheckBehaviour(leadRecord);
+    public Leads(List<Lead> sObjectList) {
+        super(sObjectList);
     }
-  }
 
-  public override void onValidate(Map<Id, SObject> existingRecords) {
-    List<Lead> changedLeads = getChangedRecords(
-      new Set<SObjectField>{ Lead.OwnerId }
-    );
-    for (Lead leadRecord : changedLeads) {
-      ownerCheckBehaviour(leadRecord);
+    public override void onValidate() {
+        ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
+            this
+        );
+        leadOwnerCheck.checkLeads((List<Lead>) Records);
     }
-  }
 
-  private void ownerCheckBehaviour(Lead leadRecord) {
-    if (leadRecord.LeadSource == null) {
-      leadRecord.OwnerId.addError(
-        error('You must provide Lead Source', leadRecord, Lead.OwnerId)
-      );
+    public override void onValidate(Map<Id, SObject> existingRecords) {
+        ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
+            this
+        );
+        List<Lead> changedLeads = getChangedRecords(
+            new Set<SObjectField>{ Lead.OwnerId }
+        );
+        leadOwnerCheck.checkLeads(changedLeads);
     }
-  }
 
-  public class Constructor implements fflib_SObjectDomain.IConstructable {
-    public fflib_SObjectDomain construct(List<SObject> sObjectList) {
-      return new Leads(sObjectList);
+    public class Constructor implements fflib_SObjectDomain.IConstructable {
+        public fflib_SObjectDomain construct(List<SObject> sObjectList) {
+            return new Leads(sObjectList);
+        }
     }
-  }
 }

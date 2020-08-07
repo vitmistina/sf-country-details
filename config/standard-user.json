@@ -1,0 +1,14 @@
+{
+    "Username": "standard.user@country-details.org",
+    "FirstName": "Elleanor",
+    "LastName": "Wallace",
+    "Email": "vit.mistina@gmail.com",
+    "Alias": "std1",
+    "TimeZoneSidKey": "Europe/Prague",
+    "LocaleSidKey": "en_US",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "en_US",
+    "profileName": "Custom: Sales Profile",
+    "permsets": [],
+    "generatePassword": true
+}

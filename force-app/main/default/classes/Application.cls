@@ -4,7 +4,9 @@ public with sharing class Application extends fflib_Application {
   );
 
   public static final fflib_Application.ServiceFactory service = new fflib_Application.ServiceFactory(
-    new Map<Type, Type>{}
+    new Map<Type, Type>{
+      LeadOwnerCheckImplLenient.class => LeadOwnerCheckImplLenient.class
+    }
   );
 
   public static final fflib_Application.SelectorFactory selector = new fflib_Application.SelectorFactory(
