@@ -7,3 +7,6 @@
 .sfdx
 
 coverage/
+
+fflib-apex-common/
+fflib-apex-mocks/
