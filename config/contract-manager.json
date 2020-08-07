@@ -1,0 +1,14 @@
+{
+    "Username": "contract.manager@country-details.org",
+    "FirstName": "Horace",
+    "LastName": "Diaz",
+    "Email": "vit.mistina@gmail.com",
+    "Alias": "ctrmgt1",
+    "TimeZoneSidKey": "Europe/Prague",
+    "LocaleSidKey": "en_US",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "en_US",
+    "profileName": "Contract Manager",
+    "permsets": [],
+    "generatePassword": true
+}
