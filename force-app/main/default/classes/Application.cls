@@ -21,6 +21,7 @@ public with sharing class Application extends fflib_Application {
       new fflib_Application.DomainFactory(
          Application.Selector,
          new Map<SObjectType, Type> {
+             Lead.SObjectType => Leads.Constructor.class
          }
       );
 }
