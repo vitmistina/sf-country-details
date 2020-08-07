@@ -3,6 +3,12 @@
     {
       "path": "force-app",
       "default": true
+    },
+    {
+      "path": "fflib-apex-mocks/sfdx-source/apex-mocks"
+    },
+    {
+      "path": "fflib-apex-common/sfdx-source/apex-common"
     }
   ],
   "namespace": "",
