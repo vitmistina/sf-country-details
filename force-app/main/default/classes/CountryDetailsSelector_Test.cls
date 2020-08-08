@@ -46,7 +46,7 @@ private class CountryDetailsSelector_Test {
         };
 
         ICountryDetailsSelector selector = CountryDetailsSelector.newInstance();
-        Map<String, CountryDetail__c> result = selector.getAllCountryDetails(
+        Map<String, CountryDetail__c> result = selector.getByCountryInLeads(
             new Set<String>{ 'Czech Republic', 'PA', 'SVK', 'Gibberish' }
         );
         System.assertEquals(9, result.keySet().size());
