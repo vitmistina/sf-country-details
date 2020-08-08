@@ -31,6 +31,29 @@ public with sharing class CountryDetailsSelector extends fflib_SObjectSelector i
     public Map<String, CountryDetail__c> getByCountryInLeads(
         Set<String> queriedValues
     ) {
-        return null;
+        String condition =
+            'IsoCode2__c IN :queriedValues OR ' +
+            'IsoCode3__c IN :queriedValues OR ' +
+            'Name IN :queriedValues';
+        List<CountryDetail__c> countryDetails = (List<CountryDetail__c>) Database.query(
+            newQueryFactory().setCondition(condition).toSOQL()
+        );
+        return mapCountriesToQueriedValues(queriedValues, countryDetails);
+    }
+
+    private Map<String, CountryDetail__c> mapCountriesToQueriedValues(
+        Set<String> queriedValues,
+        List<CountryDetail__c> countryDetails
+    ) {
+        Map<String, CountryDetail__c> result = new Map<String, CountryDetail__c>();
+
+        for (CountryDetail__c country : countryDetails) {
+            //TODO can be done less lazy
+            result.put(country.IsoCode2__c, country);
+            result.put(country.IsoCode3__c, country);
+            result.put(country.Name, country);
+        }
+
+        return result;
     }
 }
