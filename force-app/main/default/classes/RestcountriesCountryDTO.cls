@@ -1,6 +1,10 @@
 public with sharing class RestcountriesCountryDTO {
-    List<Country> countries;
-    String hash;
+    public List<Country> countries;
+    public Blob hash;
+
+    public RestcountriesCountryDTO() {
+        countries = new List<Country>();
+    }
 
     public class Country {
         public String name;
