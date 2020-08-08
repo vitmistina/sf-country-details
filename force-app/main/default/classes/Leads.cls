@@ -45,7 +45,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         List<Lead> selectedRecords,
         fflib_ISObjectUnitOfWork uow
     ) {
-        Set<String> queriedValues = getQueriedValues();
+        Set<String> queriedValues = getQueriedValues(selectedRecords);
         Map<String, CountryDetail__c> mapByQueriedValue = CountryDetailsSelector.newInstance()
             .getByCountryInLeads(queriedValues);
         for (Lead record : selectedRecords) {
@@ -63,9 +63,9 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
     }
 
     @TestVisible
-    private Set<String> getQueriedValues() {
+    private Set<String> getQueriedValues(List<Lead> selectedRecords) {
         Set<String> queriedValues = new Set<String>();
-        for (Lead record : (List<Lead>) Records) {
+        for (Lead record : selectedRecords) {
             if (String.isNotBlank(record.Country)) {
                 queriedValues.add(record.Country);
             }

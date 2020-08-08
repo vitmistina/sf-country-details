@@ -10,15 +10,14 @@ private class Leads_Test {
 
     @IsTest
     private static void getQueriedValues() {
-        Leads domain = new Leads(
-            new List<Lead>{
-                new Lead(Country = 'PAN'),
-                new Lead(Country = ''),
-                new Lead()
-            }
-        );
+        List<Lead> leadList = new List<Lead>{
+            new Lead(Country = 'PAN'),
+            new Lead(Country = ''),
+            new Lead()
+        };
+        Leads domain = new Leads(leadList);
 
-        Set<String> result = domain.getQueriedValues();
+        Set<String> result = domain.getQueriedValues(leadList);
 
         System.assertEquals(1, result.size());
     }
