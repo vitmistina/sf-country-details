@@ -1,6 +1,6 @@
 public with sharing class Application extends fflib_Application {
     public static final fflib_Application.UnitOfWorkFactory unitOfWork = new fflib_Application.UnitOfWorkFactory(
-        new List<SObjectType>{}
+        new List<SObjectType>{ CountryDetail__c.SObjectType, Lead.SObjectType }
     );
 
     public static final fflib_Application.ServiceFactory service = new fflib_Application.ServiceFactory(

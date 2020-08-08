@@ -57,6 +57,7 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
         CountryDetail__c existingRecord,
         RestcountriesCountryDTO.Country countryDTO
     ) {
+        existingRecord.Name = countryDTO.Name;
         existingRecord.IsoCode2__c = countryDTO.alpha2Code;
         existingRecord.IsoCode3__c = countryDTO.alpha3Code;
         existingRecord.Capital__c = countryDTO.capital;
