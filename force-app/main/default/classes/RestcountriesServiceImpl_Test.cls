@@ -120,7 +120,7 @@ private class RestcountriesServiceImpl_Test {
     }
     @IsTest
     private static void nonmatchingCache() {
-        Cache.Org.put(RestcountriesServiceImpl.CACHE_PATH, HASH_MATCHING);
+        Cache.Org.put(RestcountriesServiceImpl.CACHE_PATH, HASH_NON_MATCHING);
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
 
