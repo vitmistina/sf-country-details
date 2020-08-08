@@ -27,4 +27,10 @@ public with sharing class CountryDetailsSelector extends fflib_SObjectSelector i
             newQueryFactory().toSOQL()
         );
     }
+
+    public Map<String, CountryDetail__c> getByCountryInLeads(
+        Set<String> queriedValues
+    ) {
+        return null;
+    }
 }
