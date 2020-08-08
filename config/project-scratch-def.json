@@ -1,6 +1,6 @@
 {
     "orgName": "vitmistina company",
-    "edition": "Developer",
+    "edition": "Enterprise",
     "features": ["PlatformCache"],
     "settings": {
         "lightningExperienceSettings": {
