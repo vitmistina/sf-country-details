@@ -10,14 +10,25 @@ private class RestcountriesServiceImpl_Test {
             IRestcountriesClient.class
         );
 
+        ICountryDetailsSelector selectorMock = (ICountryDetailsSelector) mocks.mock(
+            ICountryDetailsSelector.class
+        );
+
         mocks.startStubbing();
         mocks.when(clientMock.getAllCountries())
             .thenReturn(new RestcountriesCountryDTO(HASH_INCOMING, null));
+        mocks.when(selectorMock.sObjectType())
+            .thenReturn(CountryDetail__c.SObjectType);
+        mocks.when(selectorMock.getAllCountryDetails()).thenReturn(null);
         mocks.stopStubbing();
 
         Application.service.setMock(IRestcountriesClient.class, clientMock);
+        Application.selector.setMock(selectorMock);
 
         RestcountriesServiceImpl.newInstance().updateCountryDetails();
+
+        ((ICountryDetailsSelector) mocks.verify(selectorMock, 1))
+            .getAllCountryDetails();
     }
     @IsTest
     private static void nonmatchingCache() {
