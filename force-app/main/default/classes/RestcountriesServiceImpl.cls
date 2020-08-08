@@ -14,13 +14,10 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
             .getAllCountries();
 
         //check platform cache for existing hash from previous update
-        Blob cachedHash;
-        if (Cache.Org.contains(CACHE_PATH)) {
-            cachedHash = (Blob) Cache.Org.get(CACHE_PATH);
-        }
+        Blob cachedHash = (Blob) Cache.Org.get(CACHE_PATH);
 
         //compare hashes
-        if (countriesDTO.hash != cachedHash) {
+        if (cachedHash == null || countriesDTO.hash != cachedHash) {
             fflib_ISObjectUnitOfWork uow = Application.unitOfWork.newInstance();
 
             // SOQL for existing CountryDetail records and map them by ISO3
