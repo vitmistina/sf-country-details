@@ -49,11 +49,11 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
 
             // conclude DML transaction
             uow.commitWork();
-
             // save new hash to cache
-
-            //TODO is delete untouched needed now?
+            Cache.Org.put(CACHE_PATH, countriesDTO.hash);
         }
+
+        //TODO is delete untouched needed now?
     }
 
     private CountryDetail__c transform(
@@ -71,6 +71,8 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
     }
 
     private String getBlocString(RestcountriesCountryDTO.Country countryDTO) {
+        if (countryDTO.regionalBlocs == null)
+            return null;
         Set<String> blocAcronyms = new Set<String>();
         for (
             RestcountriesCountryDTO.RegionalBlock blocDTO : countryDTO.regionalBlocs

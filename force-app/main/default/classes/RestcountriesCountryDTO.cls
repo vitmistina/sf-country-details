@@ -19,9 +19,31 @@ public with sharing class RestcountriesCountryDTO {
         public String region;
         public String subregion;
         public List<RegionalBlock> regionalBlocs;
+
+        public Country(
+            String name,
+            String alpha2Code,
+            String alpha3Code,
+            String capital,
+            String region,
+            String subregion,
+            List<RegionalBlock> regionalBlocs
+        ) {
+            this.name = name;
+            this.alpha2Code = alpha2Code;
+            this.alpha3Code = alpha3Code;
+            this.capital = capital;
+            this.region = region;
+            this.subregion = subregion;
+            this.regionalBlocs = regionalBlocs;
+        }
     }
 
     public class RegionalBlock {
         public String acronym;
+
+        public RegionalBlock(String acronym){
+            this.acronym=acronym;
+        }
     }
 }
