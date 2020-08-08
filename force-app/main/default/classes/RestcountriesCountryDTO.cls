@@ -6,6 +6,11 @@ public with sharing class RestcountriesCountryDTO {
         countries = new List<Country>();
     }
 
+    public RestcountriesCountryDTO(Blob hash, List<Country> countries) {
+        this.hash = hash;
+        this.countries = countries;
+    }
+
     public class Country {
         public String name;
         public String alpha2Code;
