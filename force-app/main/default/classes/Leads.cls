@@ -21,11 +21,14 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         uow.commitWork();
     }
 
-    public void onAfterUpdate() {
+    public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
+        System.debug('after update');
         fflib_ISObjectUnitOfWork uow = Application.unitOfWork.newInstance();
         List<Lead> changedRecords = (List<Lead>) getChangedRecords(
             new Set<SObjectField>{ Lead.Country }
         );
+        System.debug('changed records');
+        System.debug(changedRecords);
         fillCountryDetailLookup(changedRecords, uow);
         uow.commitWork();
     }

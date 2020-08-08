@@ -128,7 +128,7 @@ private class Leads_Test {
         Application.unitOfWork.setMock(uowMock);
         Application.selector.setMock(selectorMock);
 
-        domain.onAfterUpdate();
+        domain.onAfterUpdate(domain.ExistingRecords);
 
         ((ICountryDetailsSelector) mocks.verify(selectorMock, 1))
             .getByCountryInLeads(expectedSelectorInput);
