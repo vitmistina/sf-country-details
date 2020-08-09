@@ -7,14 +7,6 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         return (ILeads) Application.Domain.newInstance(recordList);
     }
 
-    public override void onValidate() {
-        //TODO behaviour select
-        // ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
-        //     this
-        // );
-        //leadOwnerCheck.checkLeads((List<Lead>) Records);
-    }
-
     public override void onBeforeInsert() {
         fillCountryDetailLookup((List<Lead>) Records);
     }
@@ -26,15 +18,36 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         fillCountryDetailLookup(changedRecords);
     }
 
+    public override void onValidate() {
+        ISObjectValidateBehaviour ratingBehaviour = selectRatingBehaviour();
+        ratingBehaviour.validate((List<Lead>) Records);
+    }
+
     public override void onValidate(Map<Id, SObject> existingRecords) {
-        //TODO behaviour select
-        // ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
-        //     this
-        // );
+        ISObjectValidateBehaviour ratingBehaviour = selectRatingBehaviour();
         List<Lead> changedLeads = getChangedRecords(
-            new Set<SObjectField>{ Lead.OwnerId }
+            new Set<SObjectField>{ Lead.Rating }
         );
-        //leadOwnerCheck.checkLeads(changedLeads);
+        ratingBehaviour.validate(changedLeads);
+    }
+
+    private ISObjectValidateBehaviour selectRatingBehaviour() {
+        ISObjectValidateBehaviour behaviour;
+
+        switch on getCurrentUserProfileName() {
+            when 'System Administrator', 'Contract Manager' {
+                behaviour = LeadsRatingCheckBehaviourLenient.newInstance(this);
+            }
+            when else {
+                behaviour = LeadsRatingCheckBehaviourStrict.newInstance(this);
+            }
+        }
+        return behaviour;
+    }
+
+    private String getCurrentUserProfileName() {
+        Id profileId = userinfo.getProfileId();
+        return [SELECT Id, Name FROM Profile WHERE Id = :profileId].Name;
     }
 
     private void fillCountryDetailLookup(List<Lead> selectedRecords) {
