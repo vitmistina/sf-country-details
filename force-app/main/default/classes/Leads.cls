@@ -20,7 +20,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
 
     public override void onValidate() {
         ISObjectValidateBehaviour ratingBehaviour = selectRatingBehaviour();
-        ratingBehaviour.validate((List<Lead>) Records);
+        ratingBehaviour.validate(Records);
     }
 
     public override void onValidate(Map<Id, SObject> existingRecords) {
@@ -31,6 +31,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         ratingBehaviour.validate(changedLeads);
     }
 
+    @TestVisible
     private ISObjectValidateBehaviour selectRatingBehaviour() {
         ISObjectValidateBehaviour behaviour;
 

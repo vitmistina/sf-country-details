@@ -1,7 +1,54 @@
 @IsTest
 private class Leads_Test {
     @IsTest
+    private static void selectRatingBehaviourAdmin() {
+        ISObjectValidateBehaviour behaviour = new Leads(new List<Lead>())
+            .selectRatingBehaviour();
+        System.assertEquals(
+            true,
+            behaviour instanceof LeadsRatingCheckBehaviourLenient
+        );
+        System.assertEquals(
+            false,
+            behaviour instanceof LeadsRatingCheckBehaviourStrict
+        );
+    }
+
+    @IsTest
+    private static void selectRatingBehaviourSales() {
+        //todo create sales user
+        ISObjectValidateBehaviour behaviour = new Leads(new List<Lead>())
+            .selectRatingBehaviour();
+        System.assertEquals(
+            false,
+            behaviour instanceof LeadsRatingCheckBehaviourLenient
+        );
+        System.assertEquals(
+            true,
+            behaviour instanceof LeadsRatingCheckBehaviourStrict
+        );
+    }
+
+    @IsTest
     private static void checkIsPerformedForNewRecords() {
+        List<Lead> leadList = new List<Lead>{ new Lead(), new Lead() };
+
+        Leads domain = new Leads(leadList);
+
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        ISObjectValidateBehaviour behaviourMock = (ISObjectValidateBehaviour) mocks.mock(
+            LeadsRatingCheckBehaviourLenient.class
+        );
+
+        Application.service.setMock(
+            LeadsRatingCheckBehaviourLenient.class,
+            behaviourMock
+        );
+
+        domain.onValidate();
+
+        ((ISObjectValidateBehaviour) mocks.verify(behaviourMock, 1))
+            .validate((List<SObject>) fflib_Match.anyList());
     }
 
     @IsTest
