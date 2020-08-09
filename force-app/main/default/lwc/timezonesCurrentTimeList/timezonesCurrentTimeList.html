@@ -1,0 +1,13 @@
+<template>
+    <p>Current time in timezones:</p>
+    <ul>
+        <template for:each={timezones} for:item="timezone">
+            <li key={timezone}>
+                <c-timezone-current-time
+                    timezone={timezone}
+                    current-time={currentTime}
+                ></c-timezone-current-time>
+            </li>
+        </template>
+    </ul>
+</template>

@@ -2,20 +2,7 @@ import { LightningElement, api } from "lwc";
 
 export default class TimezoneCurrentTime extends LightningElement {
     @api timezone;
-    currentTime = Date.now();
-    intervalHandle;
-
-    connectedCallback() {
-        /* eslint-disable */
-        this.intervalHandle = setInterval(() => {
-            this.currentTime = Date.now();
-        }, 1000);
-        /* eslint-enable */
-    }
-
-    disconnectedCallback() {
-        clearInterval(this.intervalHandle);
-    }
+    @api currentTime;
 
     get currentFormattedTimeWithOffset() {
         const direction = this.timezone.substring(3, 4) === "+" ? 1 : -1;

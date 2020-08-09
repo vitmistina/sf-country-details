@@ -1,38 +1,34 @@
 <template>
-  <lightning-card  title="Czechia">
-    <img class="flag slds-align_absolute-center slds-p-bottom_large" src="https://restcountries.eu/data/aut.svg"></img>
+  <lightning-card  title={name}>
+    <img class="flag slds-align_absolute-center slds-p-bottom_large" src={flagUrl}></img>
     <dl class="slds-dl_horizontal slds-p-horizontal_small">
       <dt class="slds-dl_horizontal__label">
           <p class="slds-truncate" title="Company">Capital:</p>
       </dt>
       <dd class="slds-dl_horizontal__detail slds-tile__meta">
-          <p class="slds-truncate" title="Salesforce">Prague</p>
+          <p class="slds-truncate" title="Salesforce">{capital}</p>
       </dd>
       <dt class="slds-dl_horizontal__label">
           <p class="slds-truncate" title="Email">Region:</p>
       </dt>
       <dd class="slds-dl_horizontal__detail slds-tile__meta">
-          <p class="slds-truncate" title="salesforce-ux@salesforce.com">Eur</p>
+          <p class="slds-truncate" title="salesforce-ux@salesforce.com">{region}</p>
       </dd>
       <dt class="slds-dl_horizontal__label">
           <p class="slds-truncate" title="Email">Subregion:</p>
       </dt>
       <dd class="slds-dl_horizontal__detail slds-tile__meta">
-          <p class="slds-truncate" title="salesforce-ux@salesforce.com">Eastern europe</p>
+          <p class="slds-truncate" title="salesforce-ux@salesforce.com">{subregion}</p>
       </dd>
       <dt class="slds-dl_horizontal__label">
           <p class="slds-truncate" title="Email">Regional Blocs:</p>
       </dt>
       <dd class="slds-dl_horizontal__detail slds-tile__meta">
-          <p class="slds-truncate" title="salesforce-ux@salesforce.com">EU</p>
+          <p class="slds-truncate" title="salesforce-ux@salesforce.com">{regionalBlocs}</p>
       </dd>
     </dl>
     <div slot="footer">
-      <p>Current time in timezones:</p>
-      <ul>
-        <li><c-timezone-current-time timezone="UTC-01:00"></c-timezone-current-time></li>
-        <li><c-timezone-current-time timezone="UTC+02:00"></c-timezone-current-time></li>
-      </ul>
+      <c-timezones-current-time-list timezones={timezones}></c-timezones-current-time-list>
 
     </div>
   </lightning-card>
