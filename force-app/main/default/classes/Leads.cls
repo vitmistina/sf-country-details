@@ -12,7 +12,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
             this
         );
-        leadOwnerCheck.checkLeads((List<Lead>) Records);
+        //leadOwnerCheck.checkLeads((List<Lead>) Records);
     }
 
     public override void onBeforeInsert() {
@@ -34,7 +34,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         List<Lead> changedLeads = getChangedRecords(
             new Set<SObjectField>{ Lead.OwnerId }
         );
-        leadOwnerCheck.checkLeads(changedLeads);
+        //leadOwnerCheck.checkLeads(changedLeads);
     }
 
     private void fillCountryDetailLookup(List<Lead> selectedRecords) {
