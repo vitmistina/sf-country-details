@@ -9,9 +9,9 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
 
     public override void onValidate() {
         //TODO behaviour select
-        ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
-            this
-        );
+        // ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
+        //     this
+        // );
         //leadOwnerCheck.checkLeads((List<Lead>) Records);
     }
 
@@ -28,9 +28,9 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
 
     public override void onValidate(Map<Id, SObject> existingRecords) {
         //TODO behaviour select
-        ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
-            this
-        );
+        // ILeadOwnerCheckBehaviour leadOwnerCheck = LeadOwnerCheckImplLenient.newInstance(
+        //     this
+        // );
         List<Lead> changedLeads = getChangedRecords(
             new Set<SObjectField>{ Lead.OwnerId }
         );

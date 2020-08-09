@@ -17,10 +17,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ILeadOwnerCheckBehaviour</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ILeads</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -33,15 +29,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>LeadOwnerCheckImplLenient</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LeadOwnerCheckImplLenient_Test</apexClass>
+        <apexClass>ISObjectValidateBehaviour</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Leads</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeadsRatingCheckBehaviourLenient</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeadsRatingCheckBehaviourLenient_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
