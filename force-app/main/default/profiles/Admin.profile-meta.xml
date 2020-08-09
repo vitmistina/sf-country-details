@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
         <apexClass>Application</apexClass>
@@ -441,6 +441,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.OwnerSince__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Phone</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -519,6 +524,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ApiEnabled</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApproveContract</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -623,10 +632,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CreateTopics</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>CreateWorkBadgeDefinition</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -738,10 +743,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>FieldServiceAccess</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>GiveRecognitionBadge</name>
     </userPermissions>
     <userPermissions>
@@ -755,6 +756,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ImportPersonal</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>InboundMigrationToolsUser</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -843,6 +848,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageEmailClientConfig</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageEntitlements</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -990,6 +999,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>OutboundMigrationToolsUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>Packaging2</name>
     </userPermissions>
     <userPermissions>
@@ -1010,15 +1023,15 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ScheduleJob</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ScheduleReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>SelectFilesFromSalesforce</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SendExternalEmailAvailable</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -1110,10 +1123,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ViewDataLeakageEvents</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ViewEventLogFiles</name>
     </userPermissions>
     <userPermissions>
@@ -1134,10 +1143,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ViewPlatformEvents</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ViewPublicDashboards</name>
     </userPermissions>
     <userPermissions>
@@ -1155,9 +1160,5 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewUserPII</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>WorkCalibrationUser</name>
     </userPermissions>
 </Profile>

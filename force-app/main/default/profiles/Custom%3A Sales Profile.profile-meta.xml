@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
         <apexClass>Application</apexClass>
@@ -441,6 +441,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.OwnerSince__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Phone</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -485,6 +490,14 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>AddDirectMessageMembers</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>AllowUniversalSearch</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>AllowViewKnowledge</name>
     </userPermissions>
     <userPermissions>
@@ -501,6 +514,14 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ChatterEditOwnPost</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterFileLink</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ChatterInternalUser</name>
     </userPermissions>
     <userPermissions>
@@ -510,6 +531,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ChatterOwnGroups</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ContentWorkspaces</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -557,6 +582,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>EnableCommunityAppLauncher</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
@@ -573,11 +602,19 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>LightningExperienceUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ListEmailSend</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>ManageEncryptionKeys</name>
+        <name>MassInlineEdit</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RemoveDirectMessageMembers</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
