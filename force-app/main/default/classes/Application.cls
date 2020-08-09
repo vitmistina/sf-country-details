@@ -7,7 +7,8 @@ public with sharing class Application extends fflib_Application {
         new Map<Type, Type>{
             IRestcountriesClient.class => RestcountriesClientImpl.class,
             IRestcountriesService.class => RestcountriesServiceImpl.class,
-            LeadsRatingCheckBehaviourLenient.class => LeadsRatingCheckBehaviourLenient.class
+            LeadsRatingCheckBehaviourLenient.class => LeadsRatingCheckBehaviourLenient.class,
+            LeadsRatingCheckBehaviourStrict.class => LeadsRatingCheckBehaviourStrict.class
         }
     );
 
