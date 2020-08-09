@@ -23,7 +23,7 @@ private class Leads_Test {
     }
 
     @IsTest
-    private static void afterInsertTrigger() {
+    private static void beforeInsertTrigger() {
         Leads domain = new Leads(
             new List<Lead>{
                 new Lead(Country = 'PAN'),
@@ -36,17 +36,17 @@ private class Leads_Test {
             'PAN',
             'Czech Republic'
         };
-        Id panamaId = fflib_IDGenerator.generate(CountryDetail__c.SObjectType);
-        Id czechId = fflib_IDGenerator.generate(CountryDetail__c.SObjectType);
+
         Map<String, CountryDetail__c> expectedSelectorOutput = new Map<String, CountryDetail__c>{
-            'PAN' => new CountryDetail__c(Id = panamaId),
-            'Czech Republic' => new CountryDetail__c(Id = czechId)
+            'PAN' => new CountryDetail__c(
+                Id = fflib_IDGenerator.generate(CountryDetail__c.SObjectType)
+            ),
+            'Czech Republic' => new CountryDetail__c(
+                Id = fflib_IDGenerator.generate(CountryDetail__c.SObjectType)
+            )
         };
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(
-            fflib_ISObjectUnitOfWork.class
-        );
         ICountryDetailsSelector selectorMock = (ICountryDetailsSelector) mocks.mock(
             ICountryDetailsSelector.class
         );
@@ -57,38 +57,28 @@ private class Leads_Test {
         mocks.when(selectorMock.getByCountryInLeads(expectedSelectorInput))
             .thenReturn(expectedSelectorOutput);
         mocks.stopStubbing();
-
-        Application.unitOfWork.setMock(uowMock);
         Application.selector.setMock(selectorMock);
 
-        domain.onAfterInsert();
+        domain.onBeforeInsert();
 
         ((ICountryDetailsSelector) mocks.verify(selectorMock, 1))
             .getByCountryInLeads(expectedSelectorInput);
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 2))
-            .registerDirty(
-                (SObject) fflib_Match.anyOf(
-                    fflib_Match.sObjectWith(
-                        new Map<Schema.SObjectField, Object>{
-                            Lead.CountryDetail__c => panamaId
-                        }
-                    ),
-                    fflib_Match.sObjectWith(
-                        new Map<Schema.SObjectField, Object>{
-                            Lead.CountryDetail__c => czechId
-                        }
-                    )
-                )
-            );
-
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 1)).commitWork();
+        for (Lead enhancedRecord : (List<Lead>) domain.Records) {
+            if (expectedSelectorInput.contains(enhancedRecord.Country)) {
+                System.assertNotEquals(null, enhancedRecord.CountryDetail__c);
+            } else {
+                System.assertEquals(null, enhancedRecord.CountryDetail__c);
+            }
+        }
     }
 
     @IsTest
-    private static void afterUpdateTrigger() {
+    private static void beforeUpdateTrigger() {
         Id panamaLeadId = fflib_IDGenerator.generate(Lead.SObjectType);
         Id czechLeadId = fflib_IDGenerator.generate(Lead.SObjectType);
-        Id panamaId = fflib_IDGenerator.generate(CountryDetail__c.SObjectType);
+        Id panamaCountryId = fflib_IDGenerator.generate(
+            CountryDetail__c.SObjectType
+        );
 
         Leads domain = new Leads(
             new List<Lead>{
@@ -107,13 +97,10 @@ private class Leads_Test {
 
         Set<String> expectedSelectorInput = new Set<String>{ 'PAN' };
         Map<String, CountryDetail__c> expectedSelectorOutput = new Map<String, CountryDetail__c>{
-            'PAN' => new CountryDetail__c(Id = panamaId)
+            'PAN' => new CountryDetail__c(Id = panamaCountryId)
         };
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        fflib_ISObjectUnitOfWork uowMock = (fflib_ISObjectUnitOfWork) mocks.mock(
-            fflib_ISObjectUnitOfWork.class
-        );
         ICountryDetailsSelector selectorMock = (ICountryDetailsSelector) mocks.mock(
             ICountryDetailsSelector.class
         );
@@ -125,22 +112,19 @@ private class Leads_Test {
             .thenReturn(expectedSelectorOutput);
         mocks.stopStubbing();
 
-        Application.unitOfWork.setMock(uowMock);
         Application.selector.setMock(selectorMock);
 
-        domain.onAfterUpdate(domain.ExistingRecords);
+        domain.onBeforeUpdate(domain.ExistingRecords);
 
         ((ICountryDetailsSelector) mocks.verify(selectorMock, 1))
             .getByCountryInLeads(expectedSelectorInput);
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 1))
-            .registerDirty(
-                fflib_Match.sObjectWith(
-                    new Map<Schema.SObjectField, Object>{
-                        Lead.CountryDetail__c => panamaId
-                    }
-                )
-            );
-
-        ((fflib_ISObjectUnitOfWork) mocks.verify(uowMock, 1)).commitWork();
+        for (Lead enhancedRecord : (List<Lead>) domain.Records) {
+            if (expectedSelectorInput.contains(enhancedRecord.Country)) {
+                System.assertEquals(
+                    panamaCountryId,
+                    enhancedRecord.CountryDetail__c
+                );
+            }
+        }
     }
 }

@@ -15,22 +15,15 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         leadOwnerCheck.checkLeads((List<Lead>) Records);
     }
 
-    public override void onAfterInsert() {
-        fflib_ISObjectUnitOfWork uow = Application.unitOfWork.newInstance();
-        fillCountryDetailLookup((List<Lead>) Records, uow);
-        uow.commitWork();
+    public override void onBeforeInsert() {
+        fillCountryDetailLookup((List<Lead>) Records);
     }
 
-    public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
-        System.debug('after update');
-        fflib_ISObjectUnitOfWork uow = Application.unitOfWork.newInstance();
+    public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
         List<Lead> changedRecords = (List<Lead>) getChangedRecords(
             new Set<SObjectField>{ Lead.Country }
         );
-        System.debug('changed records');
-        System.debug(changedRecords);
-        fillCountryDetailLookup(changedRecords, uow);
-        uow.commitWork();
+        fillCountryDetailLookup(changedRecords);
     }
 
     public override void onValidate(Map<Id, SObject> existingRecords) {
@@ -44,10 +37,7 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
         leadOwnerCheck.checkLeads(changedLeads);
     }
 
-    private void fillCountryDetailLookup(
-        List<Lead> selectedRecords,
-        fflib_ISObjectUnitOfWork uow
-    ) {
+    private void fillCountryDetailLookup(List<Lead> selectedRecords) {
         Set<String> queriedValues = getQueriedValues(selectedRecords);
         Map<String, CountryDetail__c> mapByQueriedValue = CountryDetailsSelector.newInstance()
             .getByCountryInLeads(queriedValues);
@@ -60,7 +50,6 @@ public with sharing class Leads extends fflib_SObjectDomain implements ILeads {
                 : null;
             if (foundLookupValue != record.CountryDetail__c) {
                 record.CountryDetail__c = foundLookupValue;
-                uow.registerDirty(record);
             }
         }
     }
