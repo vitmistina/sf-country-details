@@ -8,6 +8,11 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
         );
     }
 
+    public void forceUpdateCountryDetails() {
+        Cache.Org.put(CACHE_PATH, Blob.valueOf(''));
+        updateCountryDetails();
+    }
+
     public void updateCountryDetails() {
         //get countries from REST service
         RestcountriesCountryDTO countriesDTO = RestcountriesClientImpl.newInstance()
@@ -64,6 +69,8 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
         existingRecord.Region__c = countryDTO.region;
         existingRecord.Subregion__c = countryDTO.subregion;
         existingRecord.RegionalBlocs__c = getBlocString(countryDTO);
+        existingRecord.FlagUrl__c = countryDTO.flag;
+        existingRecord.Timezones__c = String.join(countryDTO.timezones, ';');
 
         return existingRecord;
     }

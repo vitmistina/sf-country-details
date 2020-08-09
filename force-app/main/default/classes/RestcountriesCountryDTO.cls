@@ -19,6 +19,8 @@ public with sharing class RestcountriesCountryDTO {
         public String region;
         public String subregion;
         public List<RegionalBlock> regionalBlocs;
+        public String flag;
+        public List<String> timezones;
 
         public Country(
             String name,
@@ -42,8 +44,8 @@ public with sharing class RestcountriesCountryDTO {
     public class RegionalBlock {
         public String acronym;
 
-        public RegionalBlock(String acronym){
-            this.acronym=acronym;
+        public RegionalBlock(String acronym) {
+            this.acronym = acronym;
         }
     }
 }
