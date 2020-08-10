@@ -1,0 +1,13 @@
+{
+    "FirstName": "Zoya",
+    "LastName": "Preston",
+    "Email": "vit.mistina@gmail.com",
+    "Alias": "sysadm1",
+    "TimeZoneSidKey": "Europe/Prague",
+    "LocaleSidKey": "en_US",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "en_US",
+    "profileName": "System Administrator",
+    "permsets": [],
+    "generatePassword": true
+}
