@@ -70,7 +70,9 @@ public with sharing class RestcountriesServiceImpl implements IRestcountriesServ
         existingRecord.Subregion__c = countryDTO.subregion;
         existingRecord.RegionalBlocs__c = getBlocString(countryDTO);
         existingRecord.FlagUrl__c = countryDTO.flag;
-        existingRecord.Timezones__c = String.join(countryDTO.timezones, ';');
+        existingRecord.Timezones__c = countryDTO.timezones != null
+            ? String.join(countryDTO.timezones, ';')
+            : null;
 
         return existingRecord;
     }
