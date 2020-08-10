@@ -17,16 +17,41 @@ private class Leads_Test {
     @IsTest
     private static void selectRatingBehaviourSales() {
         //todo create sales user
-        ISObjectValidateBehaviour behaviour = new Leads(new List<Lead>())
-            .selectRatingBehaviour();
-        System.assertEquals(
-            false,
-            behaviour instanceof LeadsRatingCheckBehaviourLenient
+        Id salesUserProfile = [
+            SELECT Id, Name
+            FROM Profile
+            WHERE Name = 'Custom: Sales Profile'
+        ]
+        .Id;
+
+        User salesUser = new User(
+            FirstName = 'Test',
+            LastName = 'Sales',
+            Username = 'test.sales@system.runas',
+            Email = 'test.sales@system.runas',
+            Alias = 'tstsls',
+            TimeZoneSidKey = 'Europe/Prague',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = salesUserProfile,
+            LanguageLocaleKey = 'en_US'
         );
-        System.assertEquals(
-            true,
-            behaviour instanceof LeadsRatingCheckBehaviourStrict
-        );
+
+        insert salesUser;
+
+        System.runAs(salesUser) {
+            ISObjectValidateBehaviour behaviour = new Leads(new List<Lead>())
+                .selectRatingBehaviour();
+            System.assertEquals(
+                false,
+                behaviour instanceof LeadsRatingCheckBehaviourLenient
+            );
+            System.assertEquals(
+                true,
+                behaviour instanceof LeadsRatingCheckBehaviourStrict
+            );
+        }
+
     }
 
     @IsTest
@@ -36,9 +61,14 @@ private class Leads_Test {
         Leads domain = new Leads(leadList);
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        ISObjectValidateBehaviour behaviourMock = (ISObjectValidateBehaviour) mocks.mock(
+        LeadsRatingCheckBehaviourLenient behaviourMock = (LeadsRatingCheckBehaviourLenient) mocks.mock(
             LeadsRatingCheckBehaviourLenient.class
         );
+
+        mocks.startStubbing();
+        mocks.when(behaviourMock.withDomain((Leads) fflib_Match.anyObject()))
+            .thenReturn(behaviourMock);
+        mocks.stopStubbing();
 
         Application.service.setMock(
             LeadsRatingCheckBehaviourLenient.class,
@@ -53,6 +83,43 @@ private class Leads_Test {
 
     @IsTest
     private static void checkIsPerformedForChangedRecords() {
+        Id panamaLeadId = fflib_IDGenerator.generate(Lead.SObjectType);
+        Id czechLeadId = fflib_IDGenerator.generate(Lead.SObjectType);
+
+        Leads domain = new Leads(
+            new List<Lead>{
+                new Lead(Id = panamaLeadId, Country = 'PAN'), // changed from empty
+                new Lead(Id = czechLeadId, Country = 'Czech Republic') //stayed same
+            }
+        );
+
+        domain.ExistingRecords = new Map<Id, Lead>{
+            panamaLeadId => new Lead(Id = panamaLeadId, Country = ''), //changes to some value
+            czechLeadId => new Lead(
+                Id = czechLeadId,
+                Country = 'Czech Republic'
+            ) //stayed same
+        };
+
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        LeadsRatingCheckBehaviourLenient behaviourMock = (LeadsRatingCheckBehaviourLenient) mocks.mock(
+            LeadsRatingCheckBehaviourLenient.class
+        );
+
+        mocks.startStubbing();
+        mocks.when(behaviourMock.withDomain((Leads) fflib_Match.anyObject()))
+            .thenReturn(behaviourMock);
+        mocks.stopStubbing();
+
+        Application.service.setMock(
+            LeadsRatingCheckBehaviourLenient.class,
+            behaviourMock
+        );
+
+        domain.onValidate(domain.ExistingRecords);
+
+        ((ISObjectValidateBehaviour) mocks.verify(behaviourMock, 1))
+            .validate((List<SObject>) fflib_Match.anyList());
     }
 
     @IsTest

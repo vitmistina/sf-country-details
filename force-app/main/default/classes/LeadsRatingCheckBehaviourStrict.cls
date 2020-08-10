@@ -1,6 +1,10 @@
 public with sharing class LeadsRatingCheckBehaviourStrict implements ISObjectValidateBehaviour {
     private Leads domain;
     private static final Decimal THRESHOLD_REVENUE = 5000000.00;
+    @TestVisible
+    private static final String REVENUE_UNDER_MESSAGE_START = 'Hot leads must have revenue over ';
+    @TestVisible
+    private static final String REVENUE_NON_DIVISIBLE_MESSAGE_START = 'Hot leads must have revenue divisible by number 42. Try inputting ';
 
     public static ISObjectValidateBehaviour newInstance(Leads domain) {
         return ((LeadsRatingCheckBehaviourStrict) Application.service.newInstance(
@@ -23,7 +27,7 @@ public with sharing class LeadsRatingCheckBehaviourStrict implements ISObjectVal
                 ) {
                     record.OwnerId.addError(
                         domain.error(
-                            'Hot leads must have revenue over ' +
+                            REVENUE_UNDER_MESSAGE_START +
                             String.valueOf(THRESHOLD_REVENUE),
                             record,
                             Lead.OwnerId
@@ -32,7 +36,7 @@ public with sharing class LeadsRatingCheckBehaviourStrict implements ISObjectVal
                 } else if (Math.mod(record.AnnualRevenue.intValue(), 42) != 0) {
                     record.OwnerId.addError(
                         domain.error(
-                            'Hot leads must have revenue divisible by number 42. Try inputting ' +
+                            REVENUE_NON_DIVISIBLE_MESSAGE_START +
                             (record.AnnualRevenue -
                             Math.mod(record.AnnualRevenue.intValue(), 42)),
                             record,
